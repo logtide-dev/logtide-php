@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Tests\Unit;
+namespace LogTide\SDK\Tests\Unit;
 
-use LogWard\SDK\Enums\LogLevel;
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogEntry;
-use LogWard\SDK\Models\LogWardClientOptions;
+use LogTide\SDK\Enums\LogLevel;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogEntry;
+use LogTide\SDK\Models\LogTideClientOptions;
 use PHPUnit\Framework\TestCase;
 
-class LogWardClientTest extends TestCase
+class LogTideClientTest extends TestCase
 {
-    private LogWardClient $client;
+    private LogTideClient $client;
 
     protected function setUp(): void
     {
-        $this->client = new LogWardClient(new LogWardClientOptions(
+        $this->client = new LogTideClient(new LogTideClientOptions(
             apiUrl: 'http://localhost:8080',
             apiKey: 'test_key',
             batchSize: 5,

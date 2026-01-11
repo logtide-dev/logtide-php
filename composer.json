@@ -1,9 +1,9 @@
 {
-  "name": "logward-dev/sdk-php",
-  "description": "Official PHP SDK for LogWard - Self-hosted log management with batching, retry logic, circuit breaker, query API, and middleware support",
+  "name": "logtide/sdk-php",
+  "description": "Official PHP SDK for LogTide - Self-hosted log management with batching, retry logic, circuit breaker, query API, and middleware support",
   "type": "library",
   "keywords": [
-    "logward",
+    "logtide",
     "logging",
     "logs",
     "log-management",
@@ -35,12 +35,12 @@
   },
   "autoload": {
     "psr-4": {
-      "LogWard\\SDK\\": "src/"
+      "LogTide\\SDK\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "LogWard\\SDK\\Tests\\": "tests/"
+      "LogTide\\SDK\\Tests\\": "tests/"
     }
   },
   "scripts": {

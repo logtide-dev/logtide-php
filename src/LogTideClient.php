@@ -2,30 +2,30 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK;
+namespace LogTide\SDK;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use LogWard\SDK\Enums\CircuitState;
-use LogWard\SDK\Enums\LogLevel;
-use LogWard\SDK\Exceptions\BufferFullException;
-use LogWard\SDK\Models\AggregatedStatsOptions;
-use LogWard\SDK\Models\AggregatedStatsResponse;
-use LogWard\SDK\Models\ClientMetrics;
-use LogWard\SDK\Models\LogEntry;
-use LogWard\SDK\Models\LogsResponse;
-use LogWard\SDK\Models\LogWardClientOptions;
-use LogWard\SDK\Models\QueryOptions;
+use LogTide\SDK\Enums\CircuitState;
+use LogTide\SDK\Enums\LogLevel;
+use LogTide\SDK\Exceptions\BufferFullException;
+use LogTide\SDK\Models\AggregatedStatsOptions;
+use LogTide\SDK\Models\AggregatedStatsResponse;
+use LogTide\SDK\Models\ClientMetrics;
+use LogTide\SDK\Models\LogEntry;
+use LogTide\SDK\Models\LogsResponse;
+use LogTide\SDK\Models\LogTideClientOptions;
+use LogTide\SDK\Models\QueryOptions;
 use Ramsey\Uuid\Uuid;
 use Throwable;
 
 /**
- * LogWard PHP SDK Client
- * 
- * Main client for sending logs to LogWard with automatic batching,
+ * LogTide PHP SDK Client
+ *
+ * Main client for sending logs to LogTide with automatic batching,
  * retry logic, circuit breaker, and query capabilities.
  */
-class LogWardClient
+class LogTideClient
 {
     private readonly string $apiUrl;
     private readonly string $apiKey;
@@ -51,7 +51,7 @@ class LogWardClient
 
     private ?string $currentTraceId = null;
 
-    public function __construct(LogWardClientOptions $options)
+    public function __construct(LogTideClientOptions $options)
     {
         $this->apiUrl = rtrim($options->apiUrl, '/');
         $this->apiKey = $options->apiKey;
@@ -143,7 +143,7 @@ class LogWardClient
             $this->metrics->logsDropped++;
 
             if ($this->debugMode) {
-                error_log("[LogWard] Buffer full, dropping log: {$entry->message}");
+                error_log("[LogTide] Buffer full, dropping log: {$entry->message}");
             }
 
             throw new BufferFullException();
@@ -222,7 +222,7 @@ class LogWardClient
     // ==================== Flush with Retry & Circuit Breaker ====================
 
     /**
-     * Flush buffered logs to LogWard API
+     * Flush buffered logs to LogTide API
      * Implements retry logic with exponential backoff and circuit breaker pattern
      */
     public function flush(): void
@@ -236,7 +236,7 @@ class LogWardClient
             $this->metrics->circuitBreakerTrips++;
 
             if ($this->debugMode) {
-                error_log('[LogWard] Circuit breaker OPEN, skipping flush');
+                error_log('[LogTide] Circuit breaker OPEN, skipping flush');
             }
 
             return;
@@ -271,7 +271,7 @@ class LogWardClient
                     }
 
                     if ($this->debugMode) {
-                        error_log('[LogWard] Sent ' . count($logs) . ' logs successfully');
+                        error_log('[LogTide] Sent ' . count($logs) . ' logs successfully');
                     }
 
                     return;
@@ -287,7 +287,7 @@ class LogWardClient
                     $delay = $this->retryDelayMs * (2 ** $attempt);
 
                     if ($this->debugMode) {
-                        error_log("[LogWard] Retry " . ($attempt + 1) . "/{$this->maxRetries} after {$delay}ms: {$e->getMessage()}");
+                        error_log("[LogTide] Retry " . ($attempt + 1) . "/{$this->maxRetries} after {$delay}ms: {$e->getMessage()}");
                     }
 
                     usleep($delay * 1000); // usleep takes microseconds
@@ -299,7 +299,7 @@ class LogWardClient
         $this->circuitBreaker->recordFailure();
 
         if ($this->debugMode) {
-            error_log("[LogWard] Failed to send logs after {$this->maxRetries} retries: " . ($lastError?->getMessage() ?? 'Unknown error'));
+            error_log("[LogTide] Failed to send logs after {$this->maxRetries} retries: " . ($lastError?->getMessage() ?? 'Unknown error'));
         }
 
         // Re-add logs to buffer if not full
@@ -524,7 +524,7 @@ class LogWardClient
         $newTraceId = Uuid::uuid4()->toString();
 
         if ($this->debugMode) {
-            error_log("[LogWard] Invalid trace_id \"{$traceId}\" (must be UUID v4). Generated new UUID: {$newTraceId}");
+            error_log("[LogTide] Invalid trace_id \"{$traceId}\" (must be UUID v4). Generated new UUID: {$newTraceId}");
         }
 
         return $newTraceId;

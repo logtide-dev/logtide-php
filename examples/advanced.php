@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
-use LogWard\SDK\Models\QueryOptions;
-use LogWard\SDK\Models\AggregatedStatsOptions;
-use LogWard\SDK\Enums\LogLevel;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
+use LogTide\SDK\Models\QueryOptions;
+use LogTide\SDK\Models\AggregatedStatsOptions;
+use LogTide\SDK\Enums\LogLevel;
 
 // Initialize client with all options
-$client = new LogWardClient(new LogWardClientOptions(
+$client = new LogTideClient(new LogTideClientOptions(
     apiUrl: 'http://localhost:8080',
     apiKey: 'lp_your_api_key_here',
     batchSize: 50,

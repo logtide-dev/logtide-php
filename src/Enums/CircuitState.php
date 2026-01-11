@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Enums;
+namespace LogTide\SDK\Enums;
 
 /**
  * Circuit breaker states

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Middleware;
+namespace LogTide\SDK\Middleware;
 
-use LogWard\SDK\LogWardClient;
+use LogTide\SDK\LogTideClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -17,7 +17,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class Psr15Middleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly LogWardClient $client,
+        private readonly LogTideClient $client,
         private readonly string $serviceName,
         private readonly bool $logRequests = true,
         private readonly bool $logResponses = true,

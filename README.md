@@ -1,6 +1,6 @@
-# LogWard PHP SDK
+# LogTide PHP SDK
 
-Official PHP SDK for LogWard with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+Official PHP SDK for LogTide with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
 
 ## Features
 
@@ -25,16 +25,16 @@ Official PHP SDK for LogWard with advanced features: automatic batching, retry l
 ## Installation
 
 ```bash
-composer require logward/sdk-php
+composer require logtide/sdk-php
 ```
 
 ## Quick Start
 
 ```php
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
 
-$client = new LogWardClient(new LogWardClientOptions(
+$client = new LogTideClient(new LogTideClientOptions(
     apiUrl: 'http://localhost:8080',
     apiKey: 'lp_your_api_key_here',
 ));
@@ -54,7 +54,7 @@ $client->error('database', 'Connection failed', new PDOException('Timeout'));
 
 | Option | Type | Default | Description |
 |--------|------|---------|-------------|
-| `apiUrl` | `string` | **required** | Base URL of your LogWard instance |
+| `apiUrl` | `string` | **required** | Base URL of your LogTide instance |
 | `apiKey` | `string` | **required** | Project API key (starts with `lp_`) |
 | `batchSize` | `int` | `100` | Number of logs to batch before sending |
 | `flushInterval` | `int` | `5000` | Interval in ms to auto-flush logs (not actively used, flush on shutdown) |
@@ -76,7 +76,7 @@ $client->error('database', 'Connection failed', new PDOException('Timeout'));
 ### Example: Full Configuration
 
 ```php
-$client = new LogWardClient(new LogWardClientOptions(
+$client = new LogTideClient(new LogTideClientOptions(
     apiUrl: 'http://localhost:8080',
     apiKey: 'lp_your_api_key_here',
     
@@ -118,7 +118,7 @@ $client = new LogWardClient(new LogWardClientOptions(
 ### Basic Logging
 
 ```php
-use LogWard\SDK\Enums\LogLevel;
+use LogTide\SDK\Enums\LogLevel;
 
 $client->debug('service-name', 'Debug message');
 $client->info('service-name', 'Info message', ['userId' => 123]);
@@ -201,8 +201,8 @@ Search and retrieve logs programmatically.
 ### Basic Query
 
 ```php
-use LogWard\SDK\Models\QueryOptions;
-use LogWard\SDK\Enums\LogLevel;
+use LogTide\SDK\Models\QueryOptions;
+use LogTide\SDK\Enums\LogLevel;
 
 $result = $client->query(new QueryOptions(
     service: 'api-gateway',
@@ -238,7 +238,7 @@ echo "Trace has " . count($logs) . " logs\n";
 ### Aggregated Statistics
 
 ```php
-use LogWard\SDK\Models\AggregatedStatsOptions;
+use LogTide\SDK\Models\AggregatedStatsOptions;
 
 $stats = $client->getAggregatedStats(new AggregatedStatsOptions(
     from: new DateTime('-7 days'),
@@ -307,18 +307,18 @@ Auto-log all HTTP requests and responses.
 
 ```php
 // app/Http/Kernel.php or bootstrap/app.php
-use LogWard\SDK\Middleware\LaravelMiddleware;
+use LogTide\SDK\Middleware\LaravelMiddleware;
 
 $middleware->append(LaravelMiddleware::class);
 
 // Service Provider
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
 
-$this->app->singleton(LogWardClient::class, function() {
-    return new LogWardClient(new LogWardClientOptions(
-        apiUrl: env('LOGWARD_API_URL'),
-        apiKey: env('LOGWARD_API_KEY'),
+$this->app->singleton(LogTideClient::class, function() {
+    return new LogTideClient(new LogTideClientOptions(
+        apiUrl: env('LOGTIDE_API_URL'),
+        apiKey: env('LOGTIDE_API_KEY'),
     ));
 });
 ```
@@ -333,9 +333,9 @@ $this->app->singleton(LogWardClient::class, function() {
 ```php
 // config/services.yaml
 services:
-    LogWard\SDK\Middleware\SymfonySubscriber:
+    LogTide\SDK\Middleware\SymfonySubscriber:
         arguments:
-            $client: '@LogWard\SDK\LogWardClient'
+            $client: '@LogTide\SDK\LogTideClient'
             $serviceName: '%env(APP_NAME)%'
         tags:
             - { name: kernel.event_subscriber }
@@ -346,7 +346,7 @@ services:
 Compatible with Slim, Mezzio, and other PSR-15 frameworks.
 
 ```php
-use LogWard\SDK\Middleware\Psr15Middleware;
+use LogTide\SDK\Middleware\Psr15Middleware;
 
 $app->add(new Psr15Middleware(
     client: $client,
@@ -369,11 +369,11 @@ See the [examples/](./examples) directory for complete working examples:
 
 ## API Reference
 
-### LogWardClient
+### LogTideClient
 
 #### Constructor
 ```php
-new LogWardClient(LogWardClientOptions $options)
+new LogTideClient(LogTideClientOptions $options)
 ```
 
 #### Logging Methods
@@ -440,11 +440,11 @@ MIT
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logward-dev/logward-sdk-php).
+Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide-dev/logtide-sdk-php).
 
 ---
 
 ## Support
 
-- **Documentation**: [https://logward.dev/docs](https://logward.dev/docs)
-- **Issues**: [GitHub Issues](https://github.com/logward-dev/logward-sdk-php/issues)
+- **Documentation**: [https://logtide.dev/docs](https://logtide.dev/docs)
+- **Issues**: [GitHub Issues](https://github.com/logtide-dev/logtide-sdk-php/issues)

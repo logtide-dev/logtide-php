@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Middleware;
+namespace LogTide\SDK\Middleware;
 
-use LogWard\SDK\LogWardClient;
+use LogTide\SDK\LogTideClient;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
@@ -17,10 +17,10 @@ use Symfony\Component\HttpKernel\KernelEvents;
  */
 class SymfonySubscriber implements EventSubscriberInterface
 {
-    private const REQUEST_START_TIME_ATTR = '_logward_start_time';
+    private const REQUEST_START_TIME_ATTR = '_logtide_start_time';
 
     public function __construct(
-        private readonly LogWardClient $client,
+        private readonly LogTideClient $client,
         private readonly string $serviceName,
         private readonly bool $logRequests = true,
         private readonly bool $logResponses = true,

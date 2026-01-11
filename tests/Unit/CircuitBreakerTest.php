@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Tests\Unit;
+namespace LogTide\SDK\Tests\Unit;
 
-use LogWard\SDK\CircuitBreaker;
-use LogWard\SDK\Enums\CircuitState;
+use LogTide\SDK\CircuitBreaker;
+use LogTide\SDK\Enums\CircuitState;
 use PHPUnit\Framework\TestCase;
 
 class CircuitBreakerTest extends TestCase

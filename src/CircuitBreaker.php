@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK;
+namespace LogTide\SDK;
 
-use LogWard\SDK\Enums\CircuitState;
+use LogTide\SDK\Enums\CircuitState;
 
 /**
  * Circuit Breaker pattern implementation

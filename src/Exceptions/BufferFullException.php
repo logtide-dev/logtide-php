@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Exceptions;
+namespace LogTide\SDK\Exceptions;
 
 /**
  * Exception thrown when buffer is full
  */
-class BufferFullException extends LogWardException
+class BufferFullException extends LogTideException
 {
     public function __construct(string $message = 'Log buffer is full, log dropped')
     {

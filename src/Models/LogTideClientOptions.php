@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Models;
+namespace LogTide\SDK\Models;
 
 /**
- * Configuration options for LogWard client
+ * Configuration options for LogTide client
  */
-readonly class LogWardClientOptions
+readonly class LogTideClientOptions
 {
     public function __construct(
         public string $apiUrl,

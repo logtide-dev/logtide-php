@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
 
 // Initialize client
-$client = new LogWardClient(new LogWardClientOptions(
+$client = new LogTideClient(new LogTideClientOptions(
     apiUrl: 'http://localhost:8080',
     apiKey: 'lp_your_api_key_here',
 ));
@@ -32,4 +32,4 @@ $client->withTraceId('request-123', function() use ($client) {
 });
 
 // Auto-flush and cleanup on shutdown
-echo "Logs sent! Check your LogWard dashboard.\n";
+echo "Logs sent! Check your LogTide dashboard.\n";

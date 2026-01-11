@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Models;
+namespace LogTide\SDK\Models;
 
 /**
  * Aggregated statistics response

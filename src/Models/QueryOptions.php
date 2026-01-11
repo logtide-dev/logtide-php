@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Models;
+namespace LogTide\SDK\Models;
 
-use LogWard\SDK\Enums\LogLevel;
+use LogTide\SDK\Enums\LogLevel;
 
 /**
  * Options for querying logs

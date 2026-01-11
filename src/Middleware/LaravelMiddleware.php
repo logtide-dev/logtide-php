@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LogWard\SDK\Middleware;
+namespace LogTide\SDK\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use LogWard\SDK\LogWardClient;
+use LogTide\SDK\LogTideClient;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LaravelMiddleware
 {
     public function __construct(
-        private readonly LogWardClient $client,
+        private readonly LogTideClient $client,
         private readonly string $serviceName,
         private readonly bool $logRequests = true,
         private readonly bool $logResponses = true,

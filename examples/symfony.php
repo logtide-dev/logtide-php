@@ -5,18 +5,18 @@ declare(strict_types=1);
 // This is a conceptual example for Symfony integration
 // Add to config/services.yaml
 
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
-use LogWard\SDK\Middleware\SymfonySubscriber;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
+use LogTide\SDK\Middleware\SymfonySubscriber;
 
 // config/services.yaml:
 services:
-    LogWard\SDK\LogWardClient:
-        factory: ['@App\Factory\LogWardClientFactory', 'create']
+    LogTide\SDK\LogTideClient:
+        factory: ['@App\Factory\LogTideClientFactory', 'create']
 
-    LogWard\SDK\Middleware\SymfonySubscriber:
+    LogTide\SDK\Middleware\SymfonySubscriber:
         arguments:
-            $client: '@LogWard\SDK\LogWardClient'
+            $client: '@LogTide\SDK\LogTideClient'
             $serviceName: '%env(APP_NAME)%'
             $logRequests: true
             $logResponses: true
@@ -24,19 +24,19 @@ services:
         tags:
             - { name: kernel.event_subscriber }
 
-// src/Factory/LogWardClientFactory.php:
+// src/Factory/LogTideClientFactory.php:
 namespace App\Factory;
 
-use LogWard\SDK\LogWardClient;
-use LogWard\SDK\Models\LogWardClientOptions;
+use LogTide\SDK\LogTideClient;
+use LogTide\SDK\Models\LogTideClientOptions;
 
-class LogWardClientFactory
+class LogTideClientFactory
 {
-    public function create(): LogWardClient
+    public function create(): LogTideClient
     {
-        return new LogWardClient(new LogWardClientOptions(
-            apiUrl: $_ENV['LOGWARD_API_URL'] ?? 'http://localhost:8080',
-            apiKey: $_ENV['LOGWARD_API_KEY'],
+        return new LogTideClient(new LogTideClientOptions(
+            apiUrl: $_ENV['LOGTIDE_API_URL'] ?? 'http://localhost:8080',
+            apiKey: $_ENV['LOGTIDE_API_KEY'],
             debug: $_ENV['APP_DEBUG'] === 'true',
             globalMetadata: [
                 'env' => $_ENV['APP_ENV'] ?? 'dev',
@@ -49,14 +49,14 @@ class LogWardClientFactory
 // Use in controllers:
 namespace App\Controller;
 
-use LogWard\SDK\LogWardClient;
+use LogTide\SDK\LogTideClient;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class UserController
 {
     public function __construct(
-        private readonly LogWardClient $logger
+        private readonly LogTideClient $logger
     ) {
     }
 
@@ -64,9 +64,9 @@ class UserController
     public function list(): JsonResponse
     {
         $this->logger->info('users', 'Fetching users list');
-        
+
         // ... fetch users
-        
+
         return new JsonResponse(['users' => []]);
     }
 }
