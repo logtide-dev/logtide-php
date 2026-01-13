@@ -1,21 +1,36 @@
-# LogTide PHP SDK
+<p align="center">
+  <img src="https://raw.githubusercontent.com/logtide-dev/logtide/main/docs/images/logo.png" alt="LogTide Logo" width="400">
+</p>
 
-Official PHP SDK for LogTide with advanced features: automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+<h1 align="center">LogTide PHP SDK</h1>
+
+<p align="center">
+  <a href="https://packagist.org/packages/logtide/sdk-php"><img src="https://img.shields.io/packagist/v/logtide/sdk-php?color=blue" alt="Packagist"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
+  <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.1+-purple.svg" alt="PHP"></a>
+  <a href="https://github.com/logtide-dev/logtide-sdk-php/releases"><img src="https://img.shields.io/github/v/release/logtide-dev/logtide-sdk-php" alt="Release"></a>
+</p>
+
+<p align="center">
+  Official PHP SDK for <a href="https://logtide.dev">LogTide</a> with automatic batching, retry logic, circuit breaker, query API, live streaming, and middleware support.
+</p>
+
+---
 
 ## Features
 
-- ✅ **Automatic batching** with configurable size and interval
-- ✅ **Retry logic** with exponential backoff
-- ✅ **Circuit breaker** pattern for fault tolerance
-- ✅ **Max buffer size** with drop policy to prevent memory leaks
-- ✅ **Query API** for searching and filtering logs
-- ✅ **Live tail** with Server-Sent Events (SSE)
-- ✅ **Trace ID context** for distributed tracing
-- ✅ **Global metadata** added to all logs
-- ✅ **Structured error serialization**
-- ✅ **Internal metrics** (logs sent, errors, latency, etc.)
-- ✅ **Laravel, Symfony & PSR-15 middleware** for auto-logging HTTP requests
-- ✅ **Full PHP 8.1+ support** with strict types and enums
+- **Automatic batching** with configurable size and interval
+- **Retry logic** with exponential backoff
+- **Circuit breaker** pattern for fault tolerance
+- **Max buffer size** with drop policy to prevent memory leaks
+- **Query API** for searching and filtering logs
+- **Live tail** with Server-Sent Events (SSE)
+- **Trace ID context** for distributed tracing
+- **Global metadata** added to all logs
+- **Structured error serialization**
+- **Internal metrics** (logs sent, errors, latency, etc.)
+- **Laravel, Symfony & PSR-15 middleware** for auto-logging HTTP requests
+- **Full PHP 8.1+ support** with strict types and enums
 
 ## Requirements
 
@@ -57,7 +72,7 @@ $client->error('database', 'Connection failed', new PDOException('Timeout'));
 | `apiUrl` | `string` | **required** | Base URL of your LogTide instance |
 | `apiKey` | `string` | **required** | Project API key (starts with `lp_`) |
 | `batchSize` | `int` | `100` | Number of logs to batch before sending |
-| `flushInterval` | `int` | `5000` | Interval in ms to auto-flush logs (not actively used, flush on shutdown) |
+| `flushInterval` | `int` | `5000` | Interval in ms to auto-flush logs |
 
 ### Advanced Options
 
@@ -79,33 +94,33 @@ $client->error('database', 'Connection failed', new PDOException('Timeout'));
 $client = new LogTideClient(new LogTideClientOptions(
     apiUrl: 'http://localhost:8080',
     apiKey: 'lp_your_api_key_here',
-    
+
     // Batching
     batchSize: 100,
     flushInterval: 5000,
-    
+
     // Buffer management
     maxBufferSize: 10000,
-    
-    // Retry with exponential backoff (1s → 2s → 4s)
+
+    // Retry with exponential backoff (1s -> 2s -> 4s)
     maxRetries: 3,
     retryDelayMs: 1000,
-    
+
     // Circuit breaker
     circuitBreakerThreshold: 5,
     circuitBreakerResetMs: 30000,
-    
+
     // Metrics & debugging
     enableMetrics: true,
     debug: true,
-    
+
     // Global context
     globalMetadata: [
         'env' => getenv('APP_ENV'),
         'version' => '1.0.0',
         'hostname' => gethostname(),
     ],
-    
+
     // Auto trace IDs
     autoTraceId: false,
 ));
@@ -184,8 +199,6 @@ $client->withTraceId('request-456', function() use ($client) {
 ### Auto-Generated Trace ID
 
 ```php
-use Ramsey\Uuid\Uuid;
-
 $client->withNewTraceId(function() use ($client) {
     $client->info('worker', 'Background job started');
     $client->info('worker', 'Job completed');
@@ -299,7 +312,9 @@ $client->resetMetrics();
 
 ---
 
-## Middleware
+## Middleware Integration
+
+LogTide provides ready-to-use middleware for popular frameworks.
 
 ### Laravel Middleware
 
@@ -330,8 +345,8 @@ $this->app->singleton(LogTideClient::class, function() {
 
 ### Symfony Event Subscriber
 
-```php
-// config/services.yaml
+```yaml
+# config/services.yaml
 services:
     LogTide\SDK\Middleware\SymfonySubscriber:
         arguments:
@@ -367,45 +382,39 @@ See the [examples/](./examples) directory for complete working examples:
 
 ---
 
-## API Reference
+## Best Practices
 
-### LogTideClient
+### 1. Flush on Shutdown
 
-#### Constructor
 ```php
-new LogTideClient(LogTideClientOptions $options)
+// Automatic cleanup via register_shutdown_function
+// Or manually call:
+$client->close();
 ```
 
-#### Logging Methods
-- `log(LogEntry $entry): void`
-- `debug(string $service, string $message, array $metadata = []): void`
-- `info(string $service, string $message, array $metadata = []): void`
-- `warn(string $service, string $message, array $metadata = []): void`
-- `error(string $service, string $message, array|Throwable $metadataOrError = []): void`
-- `critical(string $service, string $message, array|Throwable $metadataOrError = []): void`
+### 2. Use Global Metadata
 
-#### Context Methods
-- `setTraceId(?string $traceId): void`
-- `getTraceId(): ?string`
-- `withTraceId(string $traceId, callable $fn): mixed`
-- `withNewTraceId(callable $fn): mixed`
+```php
+$client = new LogTideClient(new LogTideClientOptions(
+    apiUrl: 'http://localhost:8080',
+    apiKey: 'lp_your_api_key_here',
+    globalMetadata: [
+        'env' => getenv('APP_ENV'),
+        'version' => '1.0.0',
+        'region' => 'us-east-1',
+    ],
+));
+```
 
-#### Query Methods
-- `query(QueryOptions $options): LogsResponse`
-- `getByTraceId(string $traceId): array`
-- `getAggregatedStats(AggregatedStatsOptions $options): AggregatedStatsResponse`
+### 3. Enable Debug Mode in Development
 
-#### Streaming
-- `stream(callable $onLog, ?callable $onError = null, array $filters = []): void`
-
-#### Metrics
-- `getMetrics(): ClientMetrics`
-- `resetMetrics(): void`
-- `getCircuitBreakerState(): CircuitState`
-
-#### Lifecycle
-- `flush(): void`
-- `close(): void`
+```php
+$client = new LogTideClient(new LogTideClientOptions(
+    apiUrl: 'http://localhost:8080',
+    apiKey: 'lp_your_api_key_here',
+    debug: getenv('APP_ENV') === 'development',
+));
+```
 
 ---
 
@@ -432,19 +441,16 @@ composer cs
 
 ---
 
-## License
-
-MIT
-
----
-
 ## Contributing
 
-Contributions are welcome! Please open an issue or PR on [GitHub](https://github.com/logtide-dev/logtide-sdk-php).
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
----
+## License
 
-## Support
+MIT License - see [LICENSE](LICENSE) for details.
 
-- **Documentation**: [https://logtide.dev/docs](https://logtide.dev/docs)
-- **Issues**: [GitHub Issues](https://github.com/logtide-dev/logtide-sdk-php/issues)
+## Links
+
+- [LogTide Website](https://logtide.dev)
+- [Documentation](https://logtide.dev/docs/sdks/php/)
+- [GitHub Issues](https://github.com/logtide-dev/logtide-sdk-php/issues)
