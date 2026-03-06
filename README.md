@@ -5,194 +5,121 @@
 <h1 align="center">LogTide PHP SDK</h1>
 
 <p align="center">
-  <a href="https://packagist.org/packages/logtide/logtide"><img src="https://img.shields.io/packagist/v/logtide/logtide?color=blue" alt="Packagist"></a>
+  <a href="https://github.com/logtide-dev/logtide-php/releases"><img src="https://img.shields.io/github/v/release/logtide-dev/logtide-php" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License"></a>
-  <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.1+-purple.svg" alt="PHP"></a>
+  <a href="https://github.com/logtide-dev/logtide-php/actions"><img src="https://img.shields.io/github/actions/workflow/status/logtide-dev/logtide-php/ci.yml?branch=main" alt="CI"></a>
 </p>
 
 <p align="center">
-  Official PHP SDK for <a href="https://logtide.dev">LogTide</a> with Hub/Scope architecture, tracing, breadcrumbs, and framework integrations.
+  Official PHP SDKs for <a href="https://logtide.dev">LogTide</a> - self-hosted log management with distributed tracing, error capture, and breadcrumbs for every major framework.
 </p>
 
 ---
 
 ## Packages
 
-| Package | Description |
-|---------|-------------|
-| [`logtide/logtide`](packages/logtide) | Core SDK: Hub, Client, Scope, Transport, Integrations |
-| [`logtide/logtide-laravel`](packages/logtide-laravel) | Laravel integration with ServiceProvider, Facade, middleware |
-| [`logtide/logtide-symfony`](packages/logtide-symfony) | Symfony Bundle with event subscribers and Doctrine integration |
-| [`logtide/logtide-slim`](packages/logtide-slim) | Slim 4 middleware and error handler |
-| [`logtide/logtide-wordpress`](packages/logtide-wordpress) | WordPress plugin with DB/HTTP breadcrumbs |
+| Package | Version | Description |
+|---------|---------|-------------|
+| [`logtide/logtide`](./packages/logtide) | [![Packagist](https://img.shields.io/packagist/v/logtide/logtide?color=blue)](https://packagist.org/packages/logtide/logtide) | Core client, hub, transports, and utilities |
+| [`logtide/logtide-laravel`](./packages/logtide-laravel) | [![Packagist](https://img.shields.io/packagist/v/logtide/logtide-laravel?color=blue)](https://packagist.org/packages/logtide/logtide-laravel) | Laravel integration |
+| [`logtide/logtide-symfony`](./packages/logtide-symfony) | [![Packagist](https://img.shields.io/packagist/v/logtide/logtide-symfony?color=blue)](https://packagist.org/packages/logtide/logtide-symfony) | Symfony Bundle |
+| [`logtide/logtide-slim`](./packages/logtide-slim) | [![Packagist](https://img.shields.io/packagist/v/logtide/logtide-slim?color=blue)](https://packagist.org/packages/logtide/logtide-slim) | Slim 4 middleware |
+| [`logtide/logtide-wordpress`](./packages/logtide-wordpress) | [![Packagist](https://img.shields.io/packagist/v/logtide/logtide-wordpress?color=blue)](https://packagist.org/packages/logtide/logtide-wordpress) | WordPress integration |
 
 ## Quick Start
 
+Every framework package follows the same pattern - pass your DSN and service name:
+
 ```bash
-composer require logtide/logtide
+# Install for your framework
+composer require logtide/logtide-laravel    # Laravel
+composer require logtide/logtide-symfony    # Symfony
+composer require logtide/logtide-slim       # Slim 4
+composer require logtide/logtide-wordpress  # WordPress
+composer require logtide/logtide            # Core (standalone)
 ```
 
 ```php
+// Every integration follows the same pattern:
 \LogTide\init([
-    'dsn' => 'https://lp_your_api_key@your-logtide-instance.com',
+    'dsn' => 'https://lp_your_key@your-logtide-instance.com',
     'service' => 'my-app',
-    'environment' => 'production',
 ]);
 
-// Log messages
-\LogTide\info('User logged in', ['user_id' => 123]);
-\LogTide\error('Payment failed', ['order_id' => 456]);
-
-// Capture exceptions
-try {
-    riskyOperation();
-} catch (\Throwable $e) {
-    \LogTide\captureException($e);
-}
-
-// Breadcrumbs for context
-\LogTide\addBreadcrumb(new \LogTide\Breadcrumb\Breadcrumb(
-    \LogTide\Enum\BreadcrumbType::QUERY,
-    'SELECT * FROM users WHERE id = 1',
-    category: 'db.query',
-));
-
-// Scoped context
-\LogTide\configureScope(function (\LogTide\State\Scope $scope) {
-    $scope->setTag('request_id', 'abc-123');
-    $scope->setUser(['id' => 42, 'email' => 'user@example.com']);
-});
-
-// Tracing
-$span = \LogTide\startSpan('db.query', ['kind' => \LogTide\Enum\SpanKind::CLIENT]);
-// ... do work ...
-$span->finish(\LogTide\Enum\SpanStatus::OK);
-\LogTide\finishSpan($span);
-```
-
-## Laravel
-
-```bash
-composer require logtide/logtide-laravel
-```
-
-Add to `.env`:
-```
-LOGTIDE_DSN=https://lp_your_api_key@your-logtide-instance.com
-```
-
-Publish config:
-```bash
-php artisan vendor:publish --tag=logtide-config
-```
-
-Everything is automatic: HTTP request tracing, exception capture, DB query breadcrumbs, cache/queue monitoring.
-
-## Symfony
-
-```bash
-composer require logtide/logtide-symfony
-```
-
-```yaml
-# config/packages/logtide.yaml
-logtide:
-    dsn: '%env(LOGTIDE_DSN)%'
-    service: 'my-symfony-app'
-    environment: '%kernel.environment%'
-```
-
-Automatically traces HTTP requests, console commands, and Doctrine queries.
-
-## Slim
-
-```bash
-composer require logtide/logtide-slim
-```
-
-```php
-use LogTide\Slim\LogtideMiddleware;
-
-\LogTide\init(['dsn' => '...', 'service' => 'slim-api']);
-
-$app = \Slim\Factory\AppFactory::create();
-$app->add(new LogtideMiddleware());
-```
-
-## WordPress
-
-```bash
-composer require logtide/logtide-wordpress
-```
-
-```php
-// In your plugin or functions.php
-\LogTide\WordPress\LogtideWordPress::init([
-    'dsn' => 'https://lp_your_api_key@your-logtide-instance.com',
-    'service' => 'my-wordpress-site',
+// Or use api_url + api_key separately:
+\LogTide\init([
+    'api_url' => 'https://your-logtide-instance.com',
+    'api_key' => 'lp_your_key',
+    'service' => 'my-app',
 ]);
 ```
 
-Automatically captures: wp_die errors, database queries, HTTP API calls, plugin events, redirects.
+See each package's README for framework-specific setup instructions.
+
+---
 
 ## Architecture
 
 ```
-\LogTide\init()  -->  LogtideSdk  -->  Hub (scope stack)  -->  Client  -->  Transport
-                                        |                       |            |
-                                        Scope                   |       BatchTransport
-                                        - tags                  |        /        \
-                                        - extras            Integrations  HttpTransport  OtlpHttpTransport
-                                        - user                            (logs)          (spans)
-                                        - breadcrumbs
-                                        - span
-                                        - propagation context
+logtide/logtide                ← Core: Client, Hub, Scope, Transports, Integrations
+    ↓
+├── logtide/logtide-laravel    ← Laravel ServiceProvider, Middleware, Log Channel
+├── logtide/logtide-symfony    ← Symfony Bundle, Event Subscribers
+├── logtide/logtide-slim       ← Slim 4 PSR-15 Middleware
+└── logtide/logtide-wordpress  ← WordPress hooks & integrations
 ```
 
-## Configuration
+All framework packages share `logtide/logtide` core for:
+- **Distributed tracing** (W3C Trace Context / `traceparent`)
+- **Error serialization** with structured stack traces
+- **Breadcrumbs** for HTTP, database, and custom events
+- **Batched transport** with retry logic and circuit breaker
+- **Scope isolation** per request
+- **Monolog integration** for logging
 
-```php
-\LogTide\init([
-    'dsn' => 'https://lp_KEY@host',     // or use api_url + api_key
-    'service' => 'my-app',
-    'environment' => 'production',
-    'release' => '1.2.0',
-    'debug' => false,
+---
 
-    // Batching & resilience
-    'batch_size' => 100,
-    'max_buffer_size' => 10000,
-    'max_retries' => 3,
-    'retry_delay_ms' => 1000,
-    'circuit_breaker_threshold' => 5,
-    'circuit_breaker_reset_ms' => 30000,
-
-    // Features
-    'traces_sample_rate' => 1.0,
-    'max_breadcrumbs' => 100,
-    'attach_stacktrace' => false,
-    'send_default_pii' => false,
-
-    // Callbacks
-    'before_send' => function (\LogTide\Event $event) {
-        // modify or return null to drop
-        return $event;
-    },
-
-    // Global context
-    'tags' => ['region' => 'eu-west-1'],
-    'global_metadata' => ['hostname' => gethostname()],
-]);
-```
-
-## Testing
+## Development
 
 ```bash
+# Install dependencies
 composer install
+
+# Run all tests
 composer test
+
+# Run tests with coverage
+composer test:coverage
+
+# Static analysis (PHPStan level 8)
 composer phpstan
+
+# Code style check (PSR-12)
+composer cs
+
+# Code style fix
+composer cs:fix
 ```
+
+## Branch Model
+
+```
+feature/* ──> develop ──> main ──> tag v*.*.* ──> Packagist publish
+hotfix/*  ──> main (via PR, for urgent fixes)
+```
+
+See [`.github/BRANCH_PROTECTION.md`](.plans/BRANCH_PROTECTION.md) for full details.
+
+## Contributing
+
+Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
 
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
+
+## Links
+
+- [LogTide Website](https://logtide.dev)
+- [Documentation](https://logtide.dev/docs)
+- [GitHub Issues](https://github.com/logtide-dev/logtide-php/issues)
