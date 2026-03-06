@@ -6,11 +6,20 @@
          failOnRisky="true"
          failOnWarning="true">
     <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
+        <testsuite name="Core">
+            <directory>packages/logtide/tests</directory>
         </testsuite>
-        <testsuite name="Integration">
-            <directory>tests/Integration</directory>
+        <testsuite name="Laravel">
+            <directory>packages/logtide-laravel/tests</directory>
+        </testsuite>
+        <testsuite name="Symfony">
+            <directory>packages/logtide-symfony/tests</directory>
+        </testsuite>
+        <testsuite name="Slim">
+            <directory>packages/logtide-slim/tests</directory>
+        </testsuite>
+        <testsuite name="WordPress">
+            <directory>packages/logtide-wordpress/tests</directory>
         </testsuite>
     </testsuites>
     <coverage>
@@ -21,7 +30,11 @@
     </coverage>
     <source>
         <include>
-            <directory>src</directory>
+            <directory>packages/logtide/src</directory>
+            <directory>packages/logtide-laravel/src</directory>
+            <directory>packages/logtide-symfony/src</directory>
+            <directory>packages/logtide-slim/src</directory>
+            <directory>packages/logtide-wordpress/src</directory>
         </include>
     </source>
 </phpunit>
