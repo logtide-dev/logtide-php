@@ -18,8 +18,6 @@ class HttpApiIntegration implements IntegrationInterface
     /** @var array<string, array{span: ?Span, start: float, url: string, method: string}> */
     private array $pendingRequests = [];
 
-    private int $requestCounter = 0;
-
     public function getName(): string
     {
         return 'wordpress.http';
@@ -86,10 +84,10 @@ class HttpApiIntegration implements IntegrationInterface
     {
         $hub = LogtideSdk::getCurrentHub();
         $method = strtoupper($parsedArgs['method'] ?? 'GET');
-        $requestId = $this->generateRequestId($url, $method);
+        $requestKey = $method . '|' . $url;
 
-        $pending = $this->pendingRequests[$requestId] ?? null;
-        unset($this->pendingRequests[$requestId]);
+        $pending = $this->pendingRequests[$requestKey] ?? null;
+        unset($this->pendingRequests[$requestKey]);
 
         $duration = $pending !== null
             ? (microtime(true) - $pending['start']) * 1000
@@ -148,10 +146,5 @@ class HttpApiIntegration implements IntegrationInterface
         ));
 
         return $response;
-    }
-
-    private function generateRequestId(string $url, string $method): string
-    {
-        return md5($method . '|' . $url . '|' . (string) microtime(true));
     }
 }
