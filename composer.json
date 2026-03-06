@@ -27,7 +27,11 @@
     "symfony/event-dispatcher": "^6.4 || ^7.0",
     "symfony/console": "^6.4 || ^7.0",
     "slim/slim": "^4.0",
-    "slim/psr7": "^1.6"
+    "slim/psr7": "^1.6",
+    "php-stubs/wordpress-stubs": "^6.9",
+    "illuminate/support": "^12.53",
+    "illuminate/http": "^12.53",
+    "illuminate/contracts": "^12.53"
   },
   "repositories": [
     {
@@ -75,9 +79,9 @@
   "scripts": {
     "test": "phpunit",
     "test:coverage": "phpunit --coverage-html coverage",
-    "phpstan": "phpstan analyse packages/*/src --level=8",
-    "cs": "phpcs --standard=PSR12 packages/*/src",
-    "cs:fix": "phpcbf --standard=PSR12 packages/*/src"
+    "phpstan": "phpstan analyse --memory-limit=512M",
+    "cs": "phpcs",
+    "cs:fix": "phpcbf"
   },
   "minimum-stability": "stable",
   "prefer-stable": true

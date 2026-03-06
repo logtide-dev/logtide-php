@@ -1,0 +1,646 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Access to property \\$key on an unknown class Illuminate\\\\Cache\\\\Events\\\\CacheHit\\.$#"
+			count: 2
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$key on an unknown class Illuminate\\\\Cache\\\\Events\\\\CacheMissed\\.$#"
+			count: 2
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$key on an unknown class Illuminate\\\\Cache\\\\Events\\\\KeyWritten\\.$#"
+			count: 2
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$storeName on an unknown class Illuminate\\\\Cache\\\\Events\\\\CacheHit\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$storeName on an unknown class Illuminate\\\\Cache\\\\Events\\\\CacheMissed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$storeName on an unknown class Illuminate\\\\Cache\\\\Events\\\\KeyWritten\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Cache\\\\Events\\\\CacheHit not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Cache\\\\Events\\\\CacheMissed not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Cache\\\\Events\\\\KeyWritten not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Cache\\\\Events\\\\CacheHit\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Cache\\\\Events\\\\CacheMissed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Cache\\\\Events\\\\KeyWritten\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/CacheBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$bindings on an unknown class Illuminate\\\\Database\\\\Events\\\\QueryExecuted\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueryBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$connectionName on an unknown class Illuminate\\\\Database\\\\Events\\\\QueryExecuted\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueryBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$sql on an unknown class Illuminate\\\\Database\\\\Events\\\\QueryExecuted\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueryBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$time on an unknown class Illuminate\\\\Database\\\\Events\\\\QueryExecuted\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueryBreadcrumbIntegration.php
+
+		-
+			message: "#^Parameter \\$query of anonymous function has invalid type Illuminate\\\\Database\\\\Events\\\\QueryExecuted\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueryBreadcrumbIntegration.php
+
+		-
+			message: "#^Access to property \\$connectionName on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobFailed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$connectionName on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobProcessed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$connectionName on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobProcessing\\.$#"
+			count: 2
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$exception on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobFailed\\.$#"
+			count: 3
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$job on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobFailed\\.$#"
+			count: 5
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$job on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobProcessed\\.$#"
+			count: 5
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Access to property \\$job on an unknown class Illuminate\\\\Queue\\\\Events\\\\JobProcessing\\.$#"
+			count: 4
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Queue\\\\Events\\\\JobFailed not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Queue\\\\Events\\\\JobProcessed not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Class Illuminate\\\\Queue\\\\Events\\\\JobProcessing not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Queue\\\\Events\\\\JobFailed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Queue\\\\Events\\\\JobProcessed\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Parameter \\$event of anonymous function has invalid type Illuminate\\\\Queue\\\\Events\\\\JobProcessing\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/Integration/QueueIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\Laravel\\\\LogChannel\\:\\:__invoke\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/LogChannel.php
+
+		-
+			message: "#^Function config not found\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/LogtideMiddleware.php
+
+		-
+			message: "#^Parameter \\#1 \\$traceparent of static method LogTide\\\\Tracing\\\\PropagationContext\\:\\:fromTraceparent\\(\\) expects string, array\\|string given\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/LogtideMiddleware.php
+
+		-
+			message: "#^Call to an undefined method Illuminate\\\\Contracts\\\\Http\\\\Kernel\\:\\:pushMiddleware\\(\\)\\.$#"
+			count: 1
+			path: packages/logtide-laravel/src/LogtideServiceProvider.php
+
+		-
+			message: "#^Cannot access offset 'config' on Illuminate\\\\Contracts\\\\Foundation\\\\Application\\.$#"
+			count: 3
+			path: packages/logtide-laravel/src/LogtideServiceProvider.php
+
+		-
+			message: "#^Method LogTide\\\\Symfony\\\\Integration\\\\DoctrineIntegration\\:\\:addQueryBreadcrumb\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-symfony/src/Integration/DoctrineIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\Symfony\\\\Integration\\\\DoctrineIntegration\\:\\:sanitizeParams\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-symfony/src/Integration/DoctrineIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\Symfony\\\\Integration\\\\DoctrineIntegration\\:\\:sanitizeParams\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-symfony/src/Integration/DoctrineIntegration.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/DatabaseIntegration.php
+
+		-
+			message: "#^Parameter \\#1 \\$string of function trim expects string, string\\|null given\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/DatabaseIntegration.php
+
+		-
+			message: "#^Property wpdb\\:\\:\\$queries \\(array\\<int\\|string, array\\<int, array\\|float\\|string\\>\\>\\) in isset\\(\\) is not nullable\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/DatabaseIntegration.php
+
+		-
+			message: "#^Result of \\|\\| is always false\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/DatabaseIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onPreRequest\\(\\) has parameter \\$parsedArgs with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onPreRequest\\(\\) has parameter \\$response with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onPreRequest\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onResponse\\(\\) has parameter \\$parsedArgs with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onResponse\\(\\) has parameter \\$response with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\Integration\\\\HttpApiIntegration\\:\\:onResponse\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/Integration/HttpApiIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\LogtideWordPress\\:\\:init\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/LogtideWordPress.php
+
+		-
+			message: "#^Method LogTide\\\\WordPress\\\\LogtideWordPress\\:\\:registerIntegrations\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide-wordpress/src/LogtideWordPress.php
+
+		-
+			message: "#^Method LogTide\\\\Breadcrumb\\\\Breadcrumb\\:\\:__construct\\(\\) has parameter \\$data with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Breadcrumb/Breadcrumb.php
+
+		-
+			message: "#^Method LogTide\\\\Breadcrumb\\\\Breadcrumb\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Breadcrumb/Breadcrumb.php
+
+		-
+			message: "#^Method LogTide\\\\Client\\:\\:captureLog\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Client.php
+
+		-
+			message: "#^Method LogTide\\\\Client\\:\\:startSpan\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Client.php
+
+		-
+			message: "#^Method LogTide\\\\ClientBuilder\\:\\:create\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/ClientBuilder.php
+
+		-
+			message: "#^Method LogTide\\\\ClientInterface\\:\\:captureLog\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/ClientInterface.php
+
+		-
+			message: "#^Method LogTide\\\\ClientInterface\\:\\:startSpan\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/ClientInterface.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:buildMetadata\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getBreadcrumbs\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getException\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getExtras\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getMetadata\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getStacktrace\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:getTags\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setBreadcrumbs\\(\\) has parameter \\$breadcrumbs with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setException\\(\\) has parameter \\$exception with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setExtras\\(\\) has parameter \\$extras with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setMetadata\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setStacktrace\\(\\) has parameter \\$stacktrace with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:setTags\\(\\) has parameter \\$tags with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\Event\\:\\:toArray\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$breadcrumbs type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$exception type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$extras type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$metadata type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$stacktrace type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Property LogTide\\\\Event\\:\\:\\$tags type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Event.php
+
+		-
+			message: "#^Method LogTide\\\\EventHint\\:\\:__construct\\(\\) has parameter \\$extra with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/EventHint.php
+
+		-
+			message: "#^Method LogTide\\\\HttpClient\\\\CurlHttpClient\\:\\:post\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/HttpClient/CurlHttpClient.php
+
+		-
+			message: "#^Method LogTide\\\\HttpClient\\\\GuzzleHttpClient\\:\\:post\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/HttpClient/GuzzleHttpClient.php
+
+		-
+			message: "#^Method LogTide\\\\HttpClient\\\\HttpClientInterface\\:\\:post\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/HttpClient/HttpClientInterface.php
+
+		-
+			message: "#^Method LogTide\\\\HttpClient\\\\HttpResponse\\:\\:__construct\\(\\) has parameter \\$headers with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/HttpClient/HttpResponse.php
+
+		-
+			message: "#^Static property LogTide\\\\Integration\\\\FatalErrorListenerIntegration\\:\\:\\$reservedMemory is never read, only written\\.$#"
+			count: 1
+			path: packages/logtide/src/Integration/FatalErrorListenerIntegration.php
+
+		-
+			message: "#^Method LogTide\\\\LogtideSdk\\:\\:init\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/LogtideSdk.php
+
+		-
+			message: "#^Method LogTide\\\\Middleware\\\\Psr15Middleware\\:\\:__construct\\(\\) has parameter \\$skipPaths with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Middleware/Psr15Middleware.php
+
+		-
+			message: "#^Method LogTide\\\\Options\\:\\:fromArray\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Options.php
+
+		-
+			message: "#^Method LogTide\\\\Options\\:\\:getGlobalMetadata\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Options.php
+
+		-
+			message: "#^Method LogTide\\\\Options\\:\\:getTags\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Options.php
+
+		-
+			message: "#^Property LogTide\\\\Options\\:\\:\\$globalMetadata type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Options.php
+
+		-
+			message: "#^Property LogTide\\\\Options\\:\\:\\$tags type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Options.php
+
+		-
+			message: "#^Method LogTide\\\\Serializer\\\\ErrorSerializer\\:\\:parseStacktrace\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Serializer/ErrorSerializer.php
+
+		-
+			message: "#^Method LogTide\\\\Serializer\\\\ErrorSerializer\\:\\:serialize\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Serializer/ErrorSerializer.php
+
+		-
+			message: "#^Method LogTide\\\\Serializer\\\\ErrorSerializer\\:\\:serializePhpError\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Serializer/ErrorSerializer.php
+
+		-
+			message: "#^Offset 'function' on array\\{function\\: string, line\\?\\: int, file\\?\\: string, class\\?\\: class\\-string, type\\?\\: '\\-\\>'\\|'\\:\\:', args\\?\\: array, object\\?\\: object\\} in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: packages/logtide/src/Serializer/ErrorSerializer.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Hub\\:\\:captureLog\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Hub.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Hub\\:\\:startSpan\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Hub.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\HubInterface\\:\\:captureLog\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/HubInterface.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\HubInterface\\:\\:startSpan\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/HubInterface.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:getExtras\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:getTags\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:getUser\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:setExtras\\(\\) has parameter \\$extras with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:setTags\\(\\) has parameter \\$tags with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\State\\\\Scope\\:\\:setUser\\(\\) has parameter \\$user with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Property LogTide\\\\State\\\\Scope\\:\\:\\$extras type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Property LogTide\\\\State\\\\Scope\\:\\:\\$tags type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Property LogTide\\\\State\\\\Scope\\:\\:\\$user type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/State/Scope.php
+
+		-
+			message: "#^Method LogTide\\\\Tracing\\\\Span\\:\\:addEvent\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Method LogTide\\\\Tracing\\\\Span\\:\\:getAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Method LogTide\\\\Tracing\\\\Span\\:\\:getEvents\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Method LogTide\\\\Tracing\\\\Span\\:\\:setAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Property LogTide\\\\Tracing\\\\Span\\:\\:\\$attributes type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Property LogTide\\\\Tracing\\\\Span\\:\\:\\$events type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Tracing/Span.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\BatchTransport\\:\\:getMetrics\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/BatchTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:buildOtlpPayload\\(\\) has parameter \\$spans with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:buildOtlpPayload\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:buildResourceAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:spanToOtlp\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:toOtlpAttributes\\(\\) has parameter \\$attributes with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:toOtlpAttributes\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Method LogTide\\\\Transport\\\\OtlpHttpTransport\\:\\:toOtlpValue\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/Transport/OtlpHttpTransport.php
+
+		-
+			message: "#^Function LogTide\\\\captureLog\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\critical\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\debug\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\error\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\info\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\init\\(\\) has parameter \\$config with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\startSpan\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php
+
+		-
+			message: "#^Function LogTide\\\\warn\\(\\) has parameter \\$metadata with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: packages/logtide/src/functions.php

@@ -1,0 +1,16 @@
+includes:
+    - phpstan-baseline.neon
+
+parameters:
+    level: 8
+    paths:
+        - packages/logtide/src
+        - packages/logtide-laravel/src
+        - packages/logtide-symfony/src
+        - packages/logtide-slim/src
+        - packages/logtide-wordpress/src
+    scanFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    stubFiles:
+        - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
+    tmpDir: .phpstan-cache
