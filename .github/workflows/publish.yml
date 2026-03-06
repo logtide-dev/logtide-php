@@ -1,4 +1,4 @@
-name: Publish to Packagist
+name: Split & Publish
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
         type: string
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   # ====================
@@ -25,20 +25,22 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.version.outputs.version }}
+      tag: ${{ steps.version.outputs.tag }}
     steps:
       - name: Extract version from tag
         id: version
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
-            VERSION="${{ github.event.inputs.tag }}"
+            TAG="${{ github.event.inputs.tag }}"
           elif [ "${{ github.event_name }}" = "release" ]; then
-            VERSION="${{ github.event.release.tag_name }}"
+            TAG="${{ github.event.release.tag_name }}"
           else
-            VERSION=${GITHUB_REF#refs/tags/}
+            TAG=${GITHUB_REF#refs/tags/}
           fi
-          VERSION=${VERSION#v}
+          VERSION=${TAG#v}
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
-          echo "Version: ${VERSION}"
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "Version: ${VERSION} (tag: ${TAG})"
 
   # ====================
   # Build & Test
@@ -71,58 +73,86 @@ jobs:
         run: composer cs
 
   # ====================
-  # Publish all packages to Packagist
+  # Split monorepo & push to read-only repos
   # ====================
-  publish:
-    name: Publish to Packagist
+  split:
+    name: Split & Publish
     runs-on: ubuntu-latest
     needs: [prepare, validate]
+
+    strategy:
+      matrix:
+        include:
+          - package: logtide
+            directory: packages/logtide
+            target: logtide-dev/logtide-php-sdk
+          - package: logtide-laravel
+            directory: packages/logtide-laravel
+            target: logtide-dev/logtide-laravel
+          - package: logtide-symfony
+            directory: packages/logtide-symfony
+            target: logtide-dev/logtide-symfony
+          - package: logtide-slim
+            directory: packages/logtide-slim
+            target: logtide-dev/logtide-slim
+          - package: logtide-wordpress
+            directory: packages/logtide-wordpress
+            target: logtide-dev/logtide-wordpress
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
-          extensions: curl, json, mbstring
+          fetch-depth: 0
 
-      - name: Set version in all packages
+      - name: Install splitsh-lite
         run: |
-          VERSION="${{ needs.prepare.outputs.version }}"
-          echo "Setting version to ${VERSION} in all packages..."
+          curl -sL https://github.com/splitsh/lite/releases/download/v1.0.1/lite_linux_amd64.tar.gz | tar xz
+          sudo mv splitsh-lite /usr/local/bin/splitsh-lite
+          chmod +x /usr/local/bin/splitsh-lite
 
-          for file in composer.json packages/*/composer.json; do
-            if [ -f "$file" ]; then
-              php -r "
-                \$pkg = json_decode(file_get_contents('$file'), true);
-                \$pkg['version'] = '${VERSION}';
-                file_put_contents('$file', json_encode(\$pkg, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . \"\n\");
-              "
-              echo "  Updated $file to ${VERSION}"
-            fi
-          done
-
-      - name: Notify Packagist
+      - name: Split ${{ matrix.package }}
+        id: split
         run: |
-          echo "Notifying Packagist to re-index repository..."
-          curl -s -X POST \
-            "https://packagist.org/api/update-package?username=logtide&apiToken=${{ secrets.PACKAGIST_TOKEN }}" \
-            -d '{"repository":{"url":"https://github.com/logtide-dev/logtide-php"}}' \
-            || echo "Warning: Failed to notify Packagist"
+          SHA=$(splitsh-lite --prefix=${{ matrix.directory }})
+          echo "sha=${SHA}" >> $GITHUB_OUTPUT
+          echo "Split SHA: ${SHA}"
 
+      - name: Push to ${{ matrix.target }}
+        run: |
+          TAG="${{ needs.prepare.outputs.tag }}"
+          SHA="${{ steps.split.outputs.sha }}"
+          TARGET="https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ matrix.target }}.git"
+
+          # Create a temporary branch from the split SHA
+          git push "${TARGET}" "${SHA}:refs/heads/main" --force
+
+          # Create the tag on the split repo
+          git tag -f "${TAG}" "${SHA}"
+          git push "${TARGET}" "refs/tags/${TAG}" --force
+
+          echo "Pushed ${{ matrix.package }} -> ${{ matrix.target }} @ ${TAG}"
+
+  # ====================
+  # Summary
+  # ====================
+  summary:
+    name: Publish Summary
+    runs-on: ubuntu-latest
+    needs: [prepare, split]
+    if: always() && needs.split.result == 'success'
+
+    steps:
       - name: Create publish summary
         run: |
           VERSION="${{ needs.prepare.outputs.version }}"
-          echo "## Packagist Packages Published" >> $GITHUB_STEP_SUMMARY
+          TAG="${{ needs.prepare.outputs.tag }}"
+          echo "## Packages Published (${TAG})" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Version: **${VERSION}**" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Package | Install Command |" >> $GITHUB_STEP_SUMMARY
-          echo "|---------|-----------------|" >> $GITHUB_STEP_SUMMARY
-          echo "| logtide/logtide | \`composer require logtide/logtide:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| logtide/logtide-laravel | \`composer require logtide/logtide-laravel:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| logtide/logtide-symfony | \`composer require logtide/logtide-symfony:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| logtide/logtide-slim | \`composer require logtide/logtide-slim:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| logtide/logtide-wordpress | \`composer require logtide/logtide-wordpress:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Package | Split Repo | Install |" >> $GITHUB_STEP_SUMMARY
+          echo "|---------|------------|---------|" >> $GITHUB_STEP_SUMMARY
+          echo "| logtide/logtide | [logtide-php-sdk](https://github.com/logtide-dev/logtide-php-sdk) | \`composer require logtide/logtide:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| logtide/logtide-laravel | [logtide-laravel](https://github.com/logtide-dev/logtide-laravel) | \`composer require logtide/logtide-laravel:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| logtide/logtide-symfony | [logtide-symfony](https://github.com/logtide-dev/logtide-symfony) | \`composer require logtide/logtide-symfony:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| logtide/logtide-slim | [logtide-slim](https://github.com/logtide-dev/logtide-slim) | \`composer require logtide/logtide-slim:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| logtide/logtide-wordpress | [logtide-wordpress](https://github.com/logtide-dev/logtide-wordpress) | \`composer require logtide/logtide-wordpress:${VERSION}\` |" >> $GITHUB_STEP_SUMMARY
