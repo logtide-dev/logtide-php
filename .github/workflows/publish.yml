@@ -119,16 +119,6 @@ jobs:
           echo "sha=${SHA}" >> $GITHUB_OUTPUT
           echo "Split SHA: ${SHA}"
 
-      - name: Verify token
-        env:
-          SPLIT_TOKEN: ${{ secrets.SPLIT_TOKEN }}
-        run: |
-          if [ -z "${SPLIT_TOKEN}" ]; then
-            echo "::error::SPLIT_TOKEN secret is empty or not set!"
-            exit 1
-          fi
-          echo "SPLIT_TOKEN is set (length: ${#SPLIT_TOKEN})"
-
       - name: Push to ${{ matrix.target }}
         env:
           SPLIT_TOKEN: ${{ secrets.SPLIT_TOKEN }}
