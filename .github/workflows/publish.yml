@@ -119,17 +119,18 @@ jobs:
           echo "Split SHA: ${SHA}"
 
       - name: Push to ${{ matrix.target }}
+        env:
+          SPLIT_TOKEN: ${{ secrets.SPLIT_TOKEN }}
         run: |
           TAG="${{ needs.prepare.outputs.tag }}"
           SHA="${{ steps.split.outputs.sha }}"
-          TARGET="https://x-access-token:${{ secrets.SPLIT_TOKEN }}@github.com/${{ matrix.target }}.git"
+          TARGET="https://x-access-token:${SPLIT_TOKEN}@github.com/${{ matrix.target }}.git"
 
-          # Create a temporary branch from the split SHA
+          # Push split branch to main
           git push "${TARGET}" "${SHA}:refs/heads/main" --force
 
-          # Create the tag on the split repo
-          git tag -f "${TAG}" "${SHA}"
-          git push "${TARGET}" "refs/tags/${TAG}" --force
+          # Push the tag (using git's low-level update-ref to avoid local tag issues)
+          git push "${TARGET}" "${SHA}:refs/tags/${TAG}" --force
 
           echo "Pushed ${{ matrix.package }} -> ${{ matrix.target }} @ ${TAG}"
 
