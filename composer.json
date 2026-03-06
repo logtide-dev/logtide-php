@@ -1,20 +1,7 @@
 {
-  "name": "logtide/sdk-php",
-  "description": "Official PHP SDK for LogTide - Self-hosted log management with batching, retry logic, circuit breaker, query API, and middleware support",
-  "type": "library",
-  "keywords": [
-    "logtide",
-    "logging",
-    "logs",
-    "log-management",
-    "monitoring",
-    "observability",
-    "self-hosted",
-    "tracing",
-    "circuit-breaker",
-    "laravel",
-    "symfony"
-  ],
+  "name": "logtide/logtide-php",
+  "description": "LogTide PHP SDK monorepo - log management, tracing, and observability",
+  "type": "project",
   "license": "MIT",
   "authors": [
     {
@@ -23,32 +10,67 @@
     }
   ],
   "require": {
-    "php": "^8.1",
-    "guzzlehttp/guzzle": "^7.8",
-    "ramsey/uuid": "^4.7",
-    "psr/log": "^3.0"
+    "php": "^8.1"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.5",
     "phpstan/phpstan": "^1.10",
-    "squizlabs/php_codesniffer": "^3.8"
+    "squizlabs/php_codesniffer": "^3.8",
+    "guzzlehttp/guzzle": "^7.8",
+    "monolog/monolog": "^3.0",
+    "psr/log": "^3.0",
+    "psr/http-message": "^1.1 || ^2.0",
+    "psr/http-server-middleware": "^1.0"
   },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "packages/logtide"
+    },
+    {
+      "type": "path",
+      "url": "packages/logtide-laravel"
+    },
+    {
+      "type": "path",
+      "url": "packages/logtide-symfony"
+    },
+    {
+      "type": "path",
+      "url": "packages/logtide-slim"
+    },
+    {
+      "type": "path",
+      "url": "packages/logtide-wordpress"
+    }
+  ],
   "autoload": {
     "psr-4": {
-      "LogTide\\SDK\\": "src/"
-    }
+      "LogTide\\": "packages/logtide/src/",
+      "LogTide\\Laravel\\": "packages/logtide-laravel/src/",
+      "LogTide\\Symfony\\": "packages/logtide-symfony/src/",
+      "LogTide\\Slim\\": "packages/logtide-slim/src/",
+      "LogTide\\WordPress\\": "packages/logtide-wordpress/src/"
+    },
+    "files": [
+      "packages/logtide/src/functions.php"
+    ]
   },
   "autoload-dev": {
     "psr-4": {
-      "LogTide\\SDK\\Tests\\": "tests/"
+      "LogTide\\Tests\\": "packages/logtide/tests/",
+      "LogTide\\Laravel\\Tests\\": "packages/logtide-laravel/tests/",
+      "LogTide\\Symfony\\Tests\\": "packages/logtide-symfony/tests/",
+      "LogTide\\Slim\\Tests\\": "packages/logtide-slim/tests/",
+      "LogTide\\WordPress\\Tests\\": "packages/logtide-wordpress/tests/"
     }
   },
   "scripts": {
     "test": "phpunit",
     "test:coverage": "phpunit --coverage-html coverage",
-    "phpstan": "phpstan analyse src tests --level=8",
-    "cs": "phpcs --standard=PSR12 src tests",
-    "cs:fix": "phpcbf --standard=PSR12 src tests"
+    "phpstan": "phpstan analyse packages/*/src --level=8",
+    "cs": "phpcs --standard=PSR12 packages/*/src",
+    "cs:fix": "phpcbf --standard=PSR12 packages/*/src"
   },
   "minimum-stability": "stable",
   "prefer-stable": true

@@ -1,0 +1,35 @@
+{
+  "name": "logtide/logtide-wordpress",
+  "description": "LogTide integration for WordPress",
+  "type": "library",
+  "keywords": [
+    "logtide",
+    "wordpress",
+    "logging",
+    "observability",
+    "monitoring"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Polliog",
+      "email": "giuseppe@solture.it"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "logtide/logtide": "^0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "LogTide\\WordPress\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "LogTide\\WordPress\\Tests\\": "tests/"
+    }
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
+}
