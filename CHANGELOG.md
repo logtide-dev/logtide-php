@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1] - 2026-03-19
+
+### Fixed
+
+- Fixed `^0.1` version constraint on `logtide/logtide` in all integration packages — Composer treats `^0.1` as `>=0.1.0 <0.2.0`, so `v0.7.0` was not installable. Constraint updated to `^0.7` in `logtide-laravel`, `logtide-symfony`, `logtide-slim`, and `logtide-wordpress`. Closes [#5](https://github.com/logtide-dev/logtide-php/issues/5).
+
 ## [0.7.0] - 2026-03-06
 
 ### Added
@@ -92,5 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - PSR-15 middleware for Slim, Mezzio, and other frameworks
 - Full PHP 8.1+ support with strict types and enums
 
+[0.7.1]: https://github.com/logtide-dev/logtide-php/releases/tag/v0.7.1
 [0.7.0]: https://github.com/logtide-dev/logtide-php/releases/tag/v0.7.0
 [0.1.0]: https://github.com/logtide-dev/logtide-php/releases/tag/v0.1.0
