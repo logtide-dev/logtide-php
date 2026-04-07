@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.3] - 2026-04-07
+
+### Fixed
+
+- Fixed `Event::$time` formatting that produced ISO 8601 with a numeric offset (e.g. `2026-04-07T11:34:24+00:00`) via `format('c')`. Logtide's backend uses Zod's strict `z.string().datetime()`, which only accepts ISO 8601 ending in `Z`, so every `captureLog(...)` call was rejected with HTTP 400 "Validation error". The SDK now emits UTC ISO 8601 with a `Z` suffix (`2026-04-07T11:34:24.886Z`). Closes [#180](https://github.com/logtide-dev/logtide/issues/180).
+- Fixed empty `metadata` field being serialized as JSON array `[]` instead of object `{}`. The backend schema is `metadata: z.record(z.unknown()).optional()`, which rejects arrays with "Expected object, received array". Default `captureLog(...)` calls without any metadata now serialize `metadata` as an empty JSON object via `\stdClass`, so the first-time-user happy path validates cleanly.
+- Fixed OTLP `startTimeUnixNano`, `endTimeUnixNano`, and span event `timeUnixNano` being emitted in scientific notation (e.g. `"1.7755623882398E+18"`) due to a naive `(string) ($float * 1e9)` cast. OTLP requires a digit-only stringified `uint64`, which would cause the OTLP traces endpoint to reject the payload. The SDK now uses `sprintf('%.0f', ...)` to emit a fixed-point integer string.
+
 ## [0.7.2] - 2026-03-19
 
 ### Fixed
