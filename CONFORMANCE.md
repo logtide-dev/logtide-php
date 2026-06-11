@@ -27,7 +27,7 @@ why a scenario does not apply. TODO entries are tracked work.
 | C20 | scope isolation across concurrent requests | ✅ | `tests/Unit/State/ScopeTest.php`, Hub tests |
 | C21 | breadcrumb ring buffer eviction, oldest first | ✅ | `tests/Unit/Breadcrumb/BreadcrumbBufferTest.php` |
 | C22 | beforeSend can mutate or drop entries | ✅ | beforeSend/beforeBreadcrumb options |
-| C23 | sampling: rate 0 sends nothing (logs) / no-op spans (traces) | TODO | sampling not implemented |
+| C23 | sampling: rate 0 sends nothing (logs) / no-op spans (traces) | ✅ | `tests/Unit/SamplingTest.php` (logs) + `traces_sample_rate` (spans) |
 | C24 | OTLP span export with service.name resource | ✅ | `tests/Unit/Transport/OtlpHttpTransportTest.php` |
 | C25 | outbound traceparent injection on instrumented HTTP clients | ✅ | traceparent generation (`PropagationContext`) |
 | C26 | log/trace correlation: active span ids on entries | ✅ | Span/trace ids on events |
