@@ -1,9 +1,9 @@
 name: Split & Publish
 
 on:
-  push:
-    tags:
-      - 'v*.*.*'
+  # release-published only: `gh release create` pushes the tag AND publishes
+  # the release in one call, and the duplicate tag-push trigger raced this
+  # workflow against itself ("cannot lock ref" on the split repos).
   release:
     types: [published]
   workflow_dispatch:
@@ -130,8 +130,17 @@ jobs:
           # Push split branch to main
           git push "${TARGET}" "${SHA}:refs/heads/main" --force
 
-          # Push the tag (using git's low-level update-ref to avoid local tag issues)
-          git push "${TARGET}" "${SHA}:refs/tags/${TAG}" --force
+          # Push the tag; tolerate a concurrent run having already created it
+          # at the same SHA (ref-lock contention is not a real failure).
+          git push "${TARGET}" "${SHA}:refs/tags/${TAG}" --force || {
+            REMOTE_SHA=$(git ls-remote "${TARGET}" "refs/tags/${TAG}" | cut -f1)
+            if [ "${REMOTE_SHA}" = "${SHA}" ]; then
+              echo "Tag ${TAG} already at ${SHA} (concurrent run), continuing"
+            else
+              echo "Tag push failed and remote is at ${REMOTE_SHA:-<missing>}, expected ${SHA}"
+              exit 1
+            fi
+          }
 
           echo "Pushed ${{ matrix.package }} -> ${{ matrix.target }} @ ${TAG}"
 
