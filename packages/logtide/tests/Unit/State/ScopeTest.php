@@ -18,7 +18,6 @@ final class ScopeTest extends TestCase
     protected function tearDown(): void
     {
         $ref = new \ReflectionProperty(Scope::class, 'globalEventProcessors');
-        $ref->setAccessible(true);
         $ref->setValue(null, []);
     }
 
