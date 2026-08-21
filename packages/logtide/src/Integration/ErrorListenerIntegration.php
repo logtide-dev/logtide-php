@@ -62,10 +62,13 @@ final class ErrorListenerIntegration implements IntegrationInterface
 
     private static function severityToLevel(int $severity): LogLevel
     {
+        // E_STRICT is intentionally absent: the level was removed in PHP 8.0 and
+        // the constant itself is deprecated since 8.4, so referencing it here
+        // would emit a deprecation from inside the error handler.
         return match (true) {
             (bool) ($severity & (E_ERROR | E_CORE_ERROR | E_COMPILE_ERROR | E_USER_ERROR)) => LogLevel::CRITICAL,
             (bool) ($severity & (E_WARNING | E_CORE_WARNING | E_COMPILE_WARNING | E_USER_WARNING | E_RECOVERABLE_ERROR)) => LogLevel::WARN,
-            (bool) ($severity & (E_NOTICE | E_USER_NOTICE | E_STRICT | E_DEPRECATED | E_USER_DEPRECATED)) => LogLevel::INFO,
+            (bool) ($severity & (E_NOTICE | E_USER_NOTICE | E_DEPRECATED | E_USER_DEPRECATED)) => LogLevel::INFO,
             default => LogLevel::ERROR,
         };
     }

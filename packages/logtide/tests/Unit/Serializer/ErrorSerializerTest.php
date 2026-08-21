@@ -82,6 +82,8 @@ final class ErrorSerializerTest extends TestCase
         $this->assertSame('E_WARNING', ErrorSerializer::serializePhpError(E_WARNING, '', '', 0)['type']);
         $this->assertSame('E_NOTICE', ErrorSerializer::serializePhpError(E_NOTICE, '', '', 0)['type']);
         $this->assertSame('E_DEPRECATED', ErrorSerializer::serializePhpError(E_DEPRECATED, '', '', 0)['type']);
-        $this->assertSame('E_STRICT', ErrorSerializer::serializePhpError(E_STRICT, '', '', 0)['type']);
+        $this->assertSame('E_DEPRECATED', ErrorSerializer::serializePhpError(E_USER_DEPRECATED, '', '', 0)['type']);
+        $this->assertSame('E_RECOVERABLE_ERROR', ErrorSerializer::serializePhpError(E_RECOVERABLE_ERROR, '', '', 0)['type']);
+        $this->assertSame('E_UNKNOWN', ErrorSerializer::serializePhpError(0, '', '', 0)['type']);
     }
 }

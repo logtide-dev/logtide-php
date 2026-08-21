@@ -5,6 +5,7 @@
          colors="true"
          failOnRisky="true"
          failOnWarning="true"
+         failOnDeprecation="true"
          displayDetailsOnTestsThatTriggerDeprecations="true">
     <testsuites>
         <testsuite name="Core">
