@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.8.2] - 2026-08-21
+
+### Fixed
+
+- Fixed `Deprecated: Constant E_STRICT is deprecated since 8.4, the error level was removed` notices emitted on PHP 8.4 and 8.5. `ErrorListenerIntegration::severityToLevel()` and `ErrorSerializer::errorLevelToString()` still referenced `E_STRICT`. Both are `match` arms evaluated lazily, so the constant was only touched for notice and deprecation level diagnostics, which is why every such diagnostic produced two extra deprecation lines. Because the deprecation is raised from inside the error handler and PHP does not re-enter a user handler while it is already running, those lines were printed by PHP itself instead of being captured, polluting responses when `display_errors` is on. The `E_STRICT` level was removed in PHP 8.0 and this package requires `^8.1`, so both branches were unreachable and removing them changes no behaviour. It also avoids a fatal `Undefined constant "E_STRICT"` inside the error handler on PHP 9.0. Closes [#7](https://github.com/logtide-dev/logtide-php/issues/7).
+- Removed a `ReflectionProperty::setAccessible()` call from the test suite, deprecated in PHP 8.5 and a no-op since 8.1.
+
+### Changed
+
+- `phpunit.xml` now sets `failOnDeprecation="true"` and CI runs the test matrix on PHP 8.5 as well, so this class of issue breaks the build instead of passing silently.
+
 ## [0.8.1] - 2026-06-11
 
 ### Added
